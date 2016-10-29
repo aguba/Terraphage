@@ -17,22 +17,22 @@ public class Gear {
         mSilCost = cost;
         mType = type;
 
-        mStats = new HashMap<>();
+        mAttributes = new HashMap<>();
     }
 
-    public Gear(String name, int cost, String type, HashMap<String, Integer> stats){
+    public Gear(String name, int cost, String type, HashMap<String, Integer> attributes){
         mName = name;
         mSilCost = cost;
         mType = type;
 
-        mStats = stats;
+        mAttributes = attributes;
     }
 
     private String mName;
     private int mSilCost;
     private String mType;
 
-    private HashMap<String, Integer> mStats;
+    private HashMap<String, Integer> mAttributes;
 
     public String getName() {
         return mName;
@@ -59,22 +59,22 @@ public class Gear {
     }
 
     public HashMap<String, Integer> getStatMap(){
-        return mStats;
+        return mAttributes;
     }
 
-    public int getStat(String statName){
+    public int getAttribute(String attributeName){
         int result = 0;
-        if(mStats.containsKey(statName)){
-            result = mStats.get(statName);
+        if(mAttributes.containsKey(attributeName)){
+            result = mAttributes.get(attributeName);
         }
         return result;
     }
 
     public void setStat(String statName, int statValue){
-        mStats.put(statName, statValue);
+        mAttributes.put(statName, statValue);
     }
 
     public void setMultiStat(HashMap<String, Integer> stats){
-        mStats.putAll(stats);
+        mAttributes.putAll(stats);
     }
 }

@@ -115,6 +115,9 @@ public class Character {
         this.mAnima = mAnima;
     }
 
+    //Gear->void
+    //For a given Gear, add that gear to the inventory. For each of that gear's stats, add a
+    //modifier to the character's corresponding attribute
     public void addGear(Gear gear){
         HashMap<String, Integer> modifierStats = gear.getStatMap();
         mInventory.put(gear.getName(), gear);
@@ -124,10 +127,34 @@ public class Character {
         }
     }
 
-    /*****Helper Methods*****/
-    void addModifier(String modifierName, int modifierValue, Gear sourceGear){
+    //Gear-void
+    //For a given gear, remove any modifiers sourced by that gear that are attached to any
+    //character attributes, then remove the gear from the character inventory
+    public void removeGear(Gear gear){
+        HashMap<String, Integer> modifierStats = gear.getStatMap();
+        for(String attributeName : modifierStats.keySet()){
+            removeModifier(attributeName, gear);
+        }
+        mInventory.remove(gear.getName());
+    }
+
+    /***********************************Helper Methods***********************************/
+
+    //String*int*Gear->void
+    //For a given gear and the name and value of one of its attributes, add a modifier to the
+    //attribute corresponding to that stat with the gear listed as the source of the modifier
+    private void addModifier(String attributeName, int modifierValue, Gear sourceGear){
         if(modifierValue != 0){
-            mAttributes.get(modifierName).addModifier(sourceGear.getName(), modifierValue);
+            mAttributes.get(attributeName).addModifier(sourceGear.getName(), modifierValue);
+        }
+    }
+
+    //String->void
+    //For a given gear and the name of one of its attributes, if the corresponding character
+    //attribute has a modifier from that gear, remove that modifier
+    private void removeModifier(String attributeName, Gear sourceGear){
+        if(mAttributes.get(attributeName).containsModifier(sourceGear.getName())){
+            mAttributes.get(attributeName).removeModifier(sourceGear.getName());
         }
     }
 }
