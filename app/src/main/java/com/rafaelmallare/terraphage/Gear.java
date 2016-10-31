@@ -1,6 +1,7 @@
 package com.rafaelmallare.terraphage;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Created by Rj on 10/19/2016.
@@ -20,12 +21,12 @@ public class Gear {
         mAttributes = new HashMap<>();
     }
 
-    public Gear(String name, int cost, String type, HashMap<String, Integer> attributes){
+    public Gear(String name, int cost, String type, Object... attributeNamesAndValues){
         mName = name;
         mSilCost = cost;
         mType = type;
 
-        mAttributes = attributes;
+        mAttributes = Helper.easyMap(attributeNamesAndValues);
     }
 
     private String mName;

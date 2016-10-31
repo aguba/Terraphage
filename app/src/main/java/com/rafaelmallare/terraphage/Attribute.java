@@ -56,13 +56,14 @@ public class Attribute {
             case "HP":  setBaseValue(mCharacter.getCon() + mCharacter.getStr() + 10);
             case "REGEN":  setBaseValue(mCharacter.getCon() / 2);
             case "INIT": setBaseValue(mCharacter.getDex() + mCharacter.getPer());
-            case "SPEED": setBaseValue(mCharacter.getDex() / 2 + 3);
+            case "SPD": setBaseValue(mCharacter.getDex() / 2 + 3);
 
-            /*****Combat Attributes*****/
+            /*****Combat and Gear Attributes*****/
             case "DEF": setBaseValue(mCharacter.getDex() /*+ Evasion skill*/);
             case "ATK": setBaseValue(mCharacter.getPer() /*+ Weapon skill*/);
             case "MDMG": setBaseValue(mCharacter.getStr());
             case "RDMG": //No action - RDMG depends only on ranged weapon damage
+            case "ARM": //No action - ARM depends only on gear ARM atttribute
         }
     }
 
