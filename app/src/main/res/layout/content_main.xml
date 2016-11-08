@@ -25,10 +25,168 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="CHARACTER NAME"
             android:textColor="#FFFFFF"
             android:textSize="22sp" />
 
+        <!--HP and EXP Cards-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--HP Card-->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/hp_current_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:id="@+id/hp_total_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="22sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="1dp"
+                        android:layout_margin="4dp"
+                        android:background="#636363" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HP"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--EXP Card-->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="000"
+                            android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="4dp"
+                            android:background="#636363" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="CURRENT EXP"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="4dp"
+                        android:background="#E6E6E6" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="000"
+                            android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="4dp"
+                            android:background="#636363" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="TOTAL EXP"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <!--"Main" Card-->
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,12 +327,14 @@
 
         </android.support.v7.widget.CardView>
 
+        <!--Stat Cards-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
+            <!--Mental Stat Card-->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -185,7 +345,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="12dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -200,7 +360,7 @@
                             android:layout_height="wrap_content"
                             android:text="PER"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -213,7 +373,7 @@
                             android:layout_height="wrap_content"
                             android:text="CHR"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -226,7 +386,7 @@
                             android:layout_height="wrap_content"
                             android:text="INT"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="22sp" />
 
                     </LinearLayout>
 
@@ -242,7 +402,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -255,7 +415,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -268,7 +428,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
+                            android:textSize="22sp" />
 
                     </LinearLayout>
 
@@ -276,6 +436,7 @@
 
             </android.support.v7.widget.CardView>
 
+            <!--Physical Stat Card-->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -287,7 +448,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="12dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -302,7 +463,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -315,7 +476,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -328,7 +489,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
+                            android:textSize="22sp" />
 
                     </LinearLayout>
 
@@ -344,7 +505,7 @@
                             android:layout_height="wrap_content"
                             android:text="CON"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -357,7 +518,7 @@
                             android:layout_height="wrap_content"
                             android:text="STR"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -370,7 +531,7 @@
                             android:layout_height="wrap_content"
                             android:text="DEX"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="22sp" />
 
                     </LinearLayout>
 
