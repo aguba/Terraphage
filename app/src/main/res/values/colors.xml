@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorMentalStatBackground">#00838F</color>
+    <color name="colorMentalStatDivider">#006064</color>
+    <color name="colorPhysicalStatBackground">#D32F2F</color>
+    <color name="colorPhysicalStatDivider">#B71C1C</color>
 </resources>

@@ -29,7 +29,7 @@
             android:shadowDx="0"
             android:shadowDy="2"
             android:shadowRadius="2"
-            android:text="CHARACTER NAME"
+            android:text="@string/character_name"
             android:textColor="#FFFFFF"
             android:textSize="22sp" />
 
@@ -94,7 +94,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HP"
+                        android:text="@string/card_hp"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -118,6 +118,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <!--Current EXP-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -141,7 +142,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="CURRENT EXP"
+                            android:text="@string/card_exp_current"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -152,6 +153,7 @@
                         android:layout_margin="4dp"
                         android:background="#E6E6E6" />
 
+                    <!--Total EXP-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -175,7 +177,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="TOTAL EXP"
+                            android:text="@string/card_exp_total"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -200,6 +202,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
+                <!--Init-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -222,7 +225,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INIT"
+                        android:text="@string/card_init"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -232,6 +235,7 @@
                     android:layout_height="40dp"
                     android:background="#E6E6E6" />
 
+                <!--SPD-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -254,7 +258,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SPD"
+                        android:text="@string/card_spd"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -264,6 +268,7 @@
                     android:layout_height="40dp"
                     android:background="#E6E6E6" />
 
+                <!--DMG-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -286,7 +291,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DMG"
+                        android:text="@string/card_dmg"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -296,6 +301,7 @@
                     android:layout_height="40dp"
                     android:background="#E6E6E6" />
 
+                <!--DEF-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -318,7 +324,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DEF"
+                        android:text="@string/card_def"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -339,7 +345,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#00838F"
+                app:cardBackgroundColor="@color/colorMentalStatBackground"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -348,6 +354,7 @@
                     android:layout_margin="12dp"
                     android:orientation="horizontal">
 
+                    <!--Stat Names-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -358,7 +365,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="PER"
+                            android:text="@string/card_stat_per"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
@@ -366,12 +373,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#006064" />
+                            android:background="@color/colorMentalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CHR"
+                            android:text="@string/card_stat_chr"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
@@ -379,17 +386,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#006064" />
+                            android:background="@color/colorMentalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="INT"
+                            android:text="@string/card_stat_int"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
                     </LinearLayout>
 
+                    <!--Stat Values-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -408,7 +416,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#006064" />
+                            android:background="@color/colorMentalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -421,7 +429,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#006064" />
+                            android:background="@color/colorMentalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -441,7 +449,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#C62828"
+                app:cardBackgroundColor="@color/colorPhysicalStatBackground"
                 app:cardUseCompatPadding="true">
 
 
@@ -451,6 +459,7 @@
                     android:layout_margin="12dp"
                     android:orientation="horizontal">
 
+                    <!--Stat Values-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -469,7 +478,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#B71C1C" />
+                            android:background="@color/colorPhysicalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -482,7 +491,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#B71C1C" />
+                            android:background="@color/colorPhysicalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -493,6 +502,7 @@
 
                     </LinearLayout>
 
+                    <!--Stat Names-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -503,7 +513,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CON"
+                            android:text="@string/card_stat_con"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
@@ -511,12 +521,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#B71C1C" />
+                            android:background="@color/colorPhysicalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="STR"
+                            android:text="@string/card_stat_str"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
@@ -524,12 +534,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="8dp"
-                            android:background="#B71C1C" />
+                            android:background="@color/colorPhysicalStatDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="DEX"
+                            android:text="@string/card_stat_dex"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
