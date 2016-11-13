@@ -8,9 +8,10 @@
     tools:context="com.rafaelmallare.terraphage.MainActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/header_image"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
         android:src="@drawable/header_image_test"
-        android:scaleType="center"/>
+        android:scaleType="centerCrop"/>
 
 </LinearLayout>

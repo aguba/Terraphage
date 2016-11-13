@@ -14,7 +14,6 @@ public class Character {
 
     private Character() {
 
-        helper = new Helper();
     }
 
     private String mName;
@@ -32,8 +31,6 @@ public class Character {
     private HashMap<String, Attribute> mAttributes;
 
     private HashMap<String, Gear> mInventory;
-
-    private Helper helper;
 
     public String getName() {
         return mName;

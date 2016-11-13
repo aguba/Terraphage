@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.rafaelmallare.terraphage.MainActivity"
@@ -17,21 +17,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:orientation="vertical"
         android:paddingTop="24dp">
 
         <TextView
+            android:id="@+id/character_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:shadowColor="#000000"
             android:shadowDx="0"
             android:shadowDy="2"
-            android:shadowRadius="2"
+            android:shadowRadius="4"
             android:text="@string/character_name"
             android:textColor="#FFFFFF"
             android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/character_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:text="@string/character_path"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
 
         <!--HP and EXP Cards-->
         <LinearLayout
@@ -47,13 +59,11 @@
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="64dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginTop="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -89,7 +99,7 @@
                         android:layout_width="24dp"
                         android:layout_height="1dp"
                         android:layout_margin="4dp"
-                        android:background="#636363" />
+                        android:background="@color/colorDarkDivider" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -110,11 +120,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="80dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -123,10 +129,13 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/exp_current_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="000"
@@ -136,7 +145,7 @@
                             android:layout_width="24dp"
                             android:layout_height="1dp"
                             android:layout_margin="4dp"
-                            android:background="#636363" />
+                            android:background="@color/colorDarkDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -151,17 +160,20 @@
                         android:layout_width="1dp"
                         android:layout_height="48dp"
                         android:layout_margin="4dp"
-                        android:background="#E6E6E6" />
+                        android:background="@color/colorLightDivider" />
 
                     <!--Total EXP-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/exp_total_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="000"
@@ -171,7 +183,7 @@
                             android:layout_width="24dp"
                             android:layout_height="1dp"
                             android:layout_margin="4dp"
-                            android:background="#636363" />
+                            android:background="@color/colorDarkDivider" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -188,7 +200,7 @@
 
         </LinearLayout>
 
-        <!--"Main" Card-->
+        <!--"Initiative" Card-->
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -197,8 +209,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_margin="8dp"
+                android:layout_height="80dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -207,10 +218,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/init_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -220,7 +234,7 @@
                         android:layout_width="24dp"
                         android:layout_height="1dp"
                         android:layout_margin="4dp"
-                        android:background="#636363" />
+                        android:background="@color/colorDarkDivider" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -233,17 +247,20 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="40dp"
-                    android:background="#E6E6E6" />
+                    android:background="@color/colorLightDivider" />
 
                 <!--SPD-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/spd_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -253,7 +270,7 @@
                         android:layout_width="24dp"
                         android:layout_height="1dp"
                         android:layout_margin="4dp"
-                        android:background="#636363" />
+                        android:background="@color/colorDarkDivider" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -266,17 +283,20 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="40dp"
-                    android:background="#E6E6E6" />
+                    android:background="@color/colorLightDivider" />
 
                 <!--DMG-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/dmg_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -286,7 +306,7 @@
                         android:layout_width="24dp"
                         android:layout_height="1dp"
                         android:layout_margin="4dp"
-                        android:background="#636363" />
+                        android:background="@color/colorDarkDivider" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -299,17 +319,20 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="40dp"
-                    android:background="#E6E6E6" />
+                    android:background="@color/colorLightDivider" />
 
                 <!--DEF-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/def_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -319,7 +342,7 @@
                         android:layout_width="24dp"
                         android:layout_height="1dp"
                         android:layout_margin="4dp"
-                        android:background="#636363" />
+                        android:background="@color/colorDarkDivider" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -345,13 +368,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/colorMentalStatBackground"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
                     android:orientation="horizontal">
 
                     <!--Stat Names-->
@@ -359,12 +380,17 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
+                        android:background="@color/colorMentalStatBackground"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/per_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="@string/card_stat_per"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
@@ -372,12 +398,17 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
                             android:background="@color/colorMentalStatDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/chr_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="@string/card_stat_chr"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
@@ -385,12 +416,17 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
                             android:background="@color/colorMentalStatDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/int_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="@string/card_stat_int"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
@@ -406,36 +442,47 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/per_val"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="0"
-                            android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
-                            android:background="@color/colorMentalStatDivider" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@color/colorDarkDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/chr_val"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="0"
-                            android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
-                            android:background="@color/colorMentalStatDivider" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@color/colorDarkDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/int_val"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="0"
-                            android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
                     </LinearLayout>
@@ -449,14 +496,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/colorPhysicalStatBackground"
                 app:cardUseCompatPadding="true">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
                     android:orientation="horizontal">
 
                     <!--Stat Values-->
@@ -468,36 +512,47 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/con_val"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="0"
-                            android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
-                            android:background="@color/colorPhysicalStatDivider" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@color/colorDarkDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/str_val"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="0"
-                            android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
-                            android:background="@color/colorPhysicalStatDivider" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@color/colorDarkDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/dex_val"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="0"
-                            android:textColor="#FFFFFF"
                             android:textSize="22sp" />
 
                     </LinearLayout>
@@ -507,12 +562,17 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
+                        android:background="@color/colorPhysicalStatBackground"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/con_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="@string/card_stat_con"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
@@ -520,12 +580,17 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
                             android:background="@color/colorPhysicalStatDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/str_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="@string/card_stat_str"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />
@@ -533,12 +598,17 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_margin="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
                             android:background="@color/colorPhysicalStatDivider" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/dex_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
                             android:text="@string/card_stat_dex"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp" />

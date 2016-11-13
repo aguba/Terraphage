@@ -1,5 +1,8 @@
 package com.rafaelmallare.terraphage;
 
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +15,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+
+    static final int REQUEST_CODE_PICKER = 100;
+
+    @BindView(R.id.hp_current_val) TextView hpCurrentVal;
+    @BindView(R.id.hp_total_val) TextView hpTotalVal;
+    @BindView(R.id.exp_current_val) TextView expCurrentVal;
+    @BindView(R.id.exp_total_val) TextView expTotalVal;
+    @BindView(R.id.init_val) TextView initVal;
+    @BindView(R.id.spd_val) TextView spdVal;
+    @BindView(R.id.dmg_val) TextView dmgVal;
+    @BindView(R.id.per_val) TextView perVal;
+    @BindView(R.id.chr_val) TextView chrVal;
+    @BindView(R.id.int_val) TextView intVal;
+    @BindView(R.id.con_val) TextView conVal;
+    @BindView(R.id.str_val) TextView strVal;
+    @BindView(R.id.dex_val) TextView dexVal;
+    @BindView(R.id.header_image) ImageView headerImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +50,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+
+        ImageLoaderConfiguration imageLoaderConfig = new ImageLoaderConfiguration.Builder(this)
+                .build();
+
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(imageLoaderConfig);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +103,10 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if(id == R.id.action_change_header_image){
+            Intent headerImagePicker = new Intent(Intent.ACTION_PICK);
+            headerImagePicker.setType("image/*");
+            this.startActivityForResult(headerImagePicker, REQUEST_CODE_PICKER);
         }
 
         return super.onOptionsItemSelected(item);
@@ -97,5 +135,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
+            imageLoader.displayImage(data.getData().toString(), headerImage);
+            // do your logic ....
+        }
     }
 }
