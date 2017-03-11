@@ -1,7 +1,11 @@
 package com.rafaelmallare.terraphage;
 
 import java.util.HashMap;
-import java.util.Objects;
+
+import static com.rafaelmallare.terraphage.AttributeType.ATK;
+import static com.rafaelmallare.terraphage.AttributeType.SPD;
+import static com.rafaelmallare.terraphage.WeaponType.Melee;
+import static com.rafaelmallare.terraphage.WeaponType.Ranged;
 
 /**
  * Created by Rj on 10/29/2016.
@@ -16,15 +20,25 @@ public class GearStore {
     private GearStore() {
         mGearInventory = new HashMap<>();
 
-        addGear("Revolver", 200, "Weapon", "ATK", -1, "DMG", 10);
-        addGear("Flail", 10, "Weapon", "ATK", 3, "DMG", 4);
-        addGear("Leather Armor", 10, "Armor", "ARM", 2);
-        addGear("Medium Plate", 50, "Armor", "ARM", 5, "DEF", -3, "SPD", -1);
+        Weapon Revolver = new Weapon("Revolver", 200, Ranged, ATK, -1);
+        Revolver.setWeaponStats(10, 10, 6);
+        Weapon GreatSword = new Weapon("Great Sword", 15, Melee, ATK, -3);
+        GreatSword.setWeaponStats(4);
+        Weapon Flail = new Weapon("Flail", 10, Melee, ATK, -1);
+        Flail.setWeaponStats(4);
+
+        addWeapon(Revolver);
+        addWeapon(GreatSword);
+        addWeapon(Flail);
     }
 
     private HashMap<String, Gear> mGearInventory;
 
-    private void addGear(String gearName, int gearSilCost, String gearType, Object... gearAttributeNamesAndValues){
-        mGearInventory.put(gearName, new Gear(gearName, gearSilCost, gearType, gearAttributeNamesAndValues));
+    private void addWeapon(Weapon weapon){
+        mGearInventory.put(weapon.getName(), weapon);
+    }
+
+    public Weapon getWeapon(String weaponName){
+        return (Weapon) mGearInventory.get(weaponName);
     }
 }

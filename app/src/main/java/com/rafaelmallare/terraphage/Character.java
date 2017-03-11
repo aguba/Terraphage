@@ -1,6 +1,19 @@
 package com.rafaelmallare.terraphage;
 
+import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import static com.rafaelmallare.terraphage.AttributeType.ARM;
+import static com.rafaelmallare.terraphage.AttributeType.ATK;
+import static com.rafaelmallare.terraphage.AttributeType.DEF;
+import static com.rafaelmallare.terraphage.AttributeType.HP;
+import static com.rafaelmallare.terraphage.AttributeType.INIT;
+import static com.rafaelmallare.terraphage.AttributeType.MDMG;
+import static com.rafaelmallare.terraphage.AttributeType.RDMG;
+import static com.rafaelmallare.terraphage.AttributeType.REGEN;
+import static com.rafaelmallare.terraphage.AttributeType.SPD;
 
 /**
  * Created by Rj on 10/19/2016.
@@ -13,7 +26,21 @@ public class Character {
     }
 
     private Character() {
+        equippedWeapon = null;
 
+        mStatList = new ArrayList<>();
+        mStatList.add(mStr);
+
+        mAttributeList = new ArrayList<>();
+        mAttributeList.add(new Attribute(HP));
+        mAttributeList.add(new Attribute(REGEN));
+        mAttributeList.add(new Attribute(INIT));
+        mAttributeList.add(new Attribute(SPD));
+        mAttributeList.add(new Attribute(DEF));
+        mAttributeList.add(new Attribute(ATK));
+        mAttributeList.add(new Attribute(MDMG));
+        mAttributeList.add(new Attribute(RDMG));
+        mAttributeList.add(new Attribute(ARM));
     }
 
     private String mName;
@@ -28,9 +55,11 @@ public class Character {
     private int mInt;
     private int mAnima;
 
-    private HashMap<String, Attribute> mAttributes;
+    private Weapon equippedWeapon;
 
-    private HashMap<String, Gear> mInventory;
+    private ArrayList<Integer> mStatList;
+    private ArrayList<Attribute> mAttributeList;
+    private ArrayList<Gear> mInventoryList;
 
     public String getName() {
         return mName;
@@ -112,46 +141,116 @@ public class Character {
         this.mAnima = mAnima;
     }
 
-    //Gear->void
-    //For a given Gear, add that gear to the inventory. For each of that gear's stats, add a
-    //modifier to the character's corresponding attribute
+    public Attribute getAttribute(AttributeType attributeType){
+        return mAttributeList.get(attributeType.getVal());
+    }
+
     public void addGear(Gear gear){
-        HashMap<String, Integer> modifierStats = gear.getStatMap();
-        mInventory.put(gear.getName(), gear);
-        for(String modifierName : modifierStats.keySet()){
-            int modifierValue = modifierStats.get(modifierName);
-            addModifier(modifierName, modifierValue, gear);
-        }
+        mInventoryList.add(gear);
     }
 
-    //Gear-void
-    //For a given gear, remove any modifiers sourced by that gear that are attached to any
-    //character attributes, then remove the gear from the character inventory
     public void removeGear(Gear gear){
-        HashMap<String, Integer> modifierStats = gear.getStatMap();
-        for(String attributeName : modifierStats.keySet()){
-            removeModifier(attributeName, gear);
-        }
-        mInventory.remove(gear.getName());
+        mInventoryList.remove(gear);
     }
 
-    /***********************************Helper Methods***********************************/
-
-    //String*int*Gear->void
-    //For a given gear and the name and value of one of its attributes, add a modifier to the
-    //attribute corresponding to that stat with the gear listed as the source of the modifier
-    private void addModifier(String attributeName, int modifierValue, Gear sourceGear){
-        if(modifierValue != 0){
-            mAttributes.get(attributeName).addModifier(sourceGear.getName(), modifierValue);
+    public void equipWeapon(Weapon weapon){
+        equippedWeapon = weapon;
+        for(Attribute attribute : mAttributeList){
+            attribute.addModifier(weapon);
         }
     }
 
-    //String->void
-    //For a given gear and the name of one of its attributes, if the corresponding character
-    //attribute has a modifier from that gear, remove that modifier
-    private void removeModifier(String attributeName, Gear sourceGear){
-        if(mAttributes.get(attributeName).containsModifier(sourceGear.getName())){
-            mAttributes.get(attributeName).removeModifier(sourceGear.getName());
+    public void unequipWeapon(Weapon weapon){
+        equippedWeapon = null;
+        for(Attribute attribute : mAttributeList){
+            attribute.removeModifier(weapon);
+        }
+    }
+
+    /**********Attribute Class**********/
+    private class Attribute {
+        public Attribute(AttributeType attributeType){
+            mType = attributeType;
+            mBaseValue = 0;
+            mTotalValue = 0;
+        }
+
+        public Attribute(AttributeType attributeType, int baseValue){
+            mType = attributeType;
+            mBaseValue = baseValue;
+            mTotalValue = mBaseValue;
+        }
+
+        private AttributeType mType;
+        private int mBaseValue;
+        private int mTotalValue;
+
+        private HashMap<String, Integer> mModifiers;
+
+        public int getBaseValue(){
+            return updateBaseValue();
+        }
+
+        public int getTotalValue(){
+            return updateTotalValue();
+        }
+
+        public HashMap<String, Integer> getModifiers(){
+            return mModifiers;
+        }
+
+        private int updateTotalValue(){
+            mTotalValue = updateBaseValue();
+
+            for(Map.Entry<String, Integer> modifier : mModifiers.entrySet()){
+                mTotalValue += modifier.getValue();
+            }
+
+            return mTotalValue;
+        }
+
+        public int updateBaseValue(){
+            switch(mType){
+                case HP:    mBaseValue = mCon + mStr + 10;
+                    break;
+                case REGEN: mBaseValue = mCon / 2;
+                    break;
+                case INIT:  mBaseValue = mDex + mPer;
+                    break;
+                case SPD:   mBaseValue = (mDex / 2) + 3;
+                    break;
+
+                case DEF:   mBaseValue = mDex /*+ Evasion skill*/;
+                    break;
+                case ATK:   mBaseValue = mPer /*+ Weapon skill*/;
+                    break;
+                case MDMG:  mBaseValue = mStr;
+                    break;
+                case RDMG:  //No action - RDMG depends only on ranged weapon damage
+                case ARM:   //No action - ARM depends only on gear ARM atttribute
+                default:    break;
+            }
+
+            return mBaseValue;
+        }
+
+        public void addModifier(Gear gear){
+            for(Map.Entry<AttributeType, Integer> modifier : gear.getModifierMap().entrySet()){
+                if(modifier.getKey() == mType){
+                    mModifiers.put(gear.getName(), modifier.getValue());
+                }
+            }
+
+            updateTotalValue();
+        }
+
+        public void removeModifier(Gear gear){
+            String gearName = gear.getName();
+            if(mModifiers.containsKey(gearName)){
+                mModifiers.remove(gearName);
+            }
+
+            updateTotalValue();
         }
     }
 }
