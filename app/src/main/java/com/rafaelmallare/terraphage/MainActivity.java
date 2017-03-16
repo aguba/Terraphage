@@ -22,6 +22,19 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static com.rafaelmallare.terraphage.AttributeType.DEF;
+import static com.rafaelmallare.terraphage.AttributeType.HP;
+import static com.rafaelmallare.terraphage.AttributeType.INIT;
+import static com.rafaelmallare.terraphage.AttributeType.MDMG;
+import static com.rafaelmallare.terraphage.AttributeType.SPD;
+import static com.rafaelmallare.terraphage.StatType.CHR;
+import static com.rafaelmallare.terraphage.StatType.CON;
+import static com.rafaelmallare.terraphage.StatType.DEX;
+import static com.rafaelmallare.terraphage.StatType.INT;
+import static com.rafaelmallare.terraphage.StatType.PER;
+import static com.rafaelmallare.terraphage.StatType.STR;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,23 +42,35 @@ public class MainActivity extends AppCompatActivity
 
     static final int REQUEST_CODE_PICKER = 100;
 
-    @BindView(R.id.hp_current_val) TextView hpCurrentVal;
-    @BindView(R.id.hp_total_val) TextView hpTotalVal;
-    @BindView(R.id.exp_current_val) TextView expCurrentVal;
-    @BindView(R.id.exp_total_val) TextView expTotalVal;
-    @BindView(R.id.init_val) TextView initVal;
-    @BindView(R.id.spd_val) TextView spdVal;
-    @BindView(R.id.dmg_val) TextView dmgVal;
-    @BindView(R.id.per_val) TextView perVal;
-    @BindView(R.id.chr_val) TextView chrVal;
-    @BindView(R.id.int_val) TextView intVal;
-    @BindView(R.id.con_val) TextView conVal;
-    @BindView(R.id.str_val) TextView strVal;
-    @BindView(R.id.dex_val) TextView dexVal;
-    @BindView(R.id.header_image) ImageView headerImage;
+    //region -REGION: View Bindings-
+    @BindView(R.id.character_name) TextView characterName_view;
+    @BindView(R.id.character_path) TextView characterPath_view;
+
+    @BindView(R.id.hp_current_val) TextView hpCurrentVal_view;
+    @BindView(R.id.hp_total_val) TextView hpTotalVal_view;
+    @BindView(R.id.exp_current_val) TextView expCurrentVal_view;
+    @BindView(R.id.exp_total_val) TextView expTotalVal_view;
+
+    @BindView(R.id.init_val) TextView initVal_view;
+    @BindView(R.id.spd_val) TextView spdVal_view;
+    @BindView(R.id.dmg_val) TextView dmgVal_view;
+    @BindView(R.id.def_val) TextView defVal_view;
+
+    @BindView(R.id.per_val) TextView perVal_view;
+    @BindView(R.id.chr_val) TextView chrVal_view;
+    @BindView(R.id.int_val) TextView intVal_view;
+    @BindView(R.id.con_val) TextView conVal_view;
+    @BindView(R.id.str_val) TextView strVal_view;
+    @BindView(R.id.dex_val) TextView dexVal_view;
+    @BindView(R.id.header_image) ImageView headerImage_view;
+    //endregion
+
+    final Character character = Character.getInstance();
+    final GearStore gearStore = GearStore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //region -REGION: Initialization stuff (includes FAB code)-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,7 +99,52 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //endregion
+
+        updateViewValues();
     }
+
+    public void updateViewValues(){
+        characterName_view.setText(character.getName());
+
+        hpTotalVal_view.setText("" + character.getAttribute(HP).getTotalValue());
+        hpCurrentVal_view.setText(hpTotalVal_view.getText());
+
+        initVal_view.setText("" + character.getAttribute(INIT).getTotalValue());
+        spdVal_view.setText("" + character.getAttribute(SPD).getTotalValue());
+        dmgVal_view.setText("" + character.getAttribute(MDMG).getTotalValue());
+        defVal_view.setText("" + character.getAttribute(DEF).getTotalValue());
+
+        expTotalVal_view.setText("" + character.getExp());
+        expCurrentVal_view.setText(expTotalVal_view.getText());
+
+        perVal_view.setText("" + character.getStat(PER));
+        chrVal_view.setText("" + character.getStat(CHR));
+        intVal_view.setText("" + character.getStat(INT));
+        conVal_view.setText("" + character.getStat(CON));
+        strVal_view.setText("" + character.getStat(STR));
+        dexVal_view.setText("" + character.getStat(DEX));
+    }
+
+    /******test methods*******/
+    @OnClick(R.id.dex_val)
+    public void increaseDex(){
+        character.increaseStat(DEX, 1);
+        updateViewValues();
+    }
+
+    @OnClick(R.id.str_val)
+    public void increaseStr(){
+        character.increaseStat(STR, 1);
+        updateViewValues();
+    }
+
+    @OnClick(R.id.con_val)
+    public void increaseCon(){
+        character.increaseStat(CON, 1);
+        updateViewValues();
+    }
+    /************************/
 
     @Override
     public void onBackPressed() {
@@ -140,8 +210,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
-            imageLoader.displayImage(data.getData().toString(), headerImage);
-            // do your logic ....
+            imageLoader.displayImage(data.getData().toString(), headerImage_view);
         }
     }
 }

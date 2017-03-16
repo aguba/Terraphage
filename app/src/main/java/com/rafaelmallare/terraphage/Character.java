@@ -1,6 +1,5 @@
 package com.rafaelmallare.terraphage;
 
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +13,12 @@ import static com.rafaelmallare.terraphage.AttributeType.MDMG;
 import static com.rafaelmallare.terraphage.AttributeType.RDMG;
 import static com.rafaelmallare.terraphage.AttributeType.REGEN;
 import static com.rafaelmallare.terraphage.AttributeType.SPD;
+import static com.rafaelmallare.terraphage.StatType.CHR;
+import static com.rafaelmallare.terraphage.StatType.CON;
+import static com.rafaelmallare.terraphage.StatType.DEX;
+import static com.rafaelmallare.terraphage.StatType.INT;
+import static com.rafaelmallare.terraphage.StatType.PER;
+import static com.rafaelmallare.terraphage.StatType.STR;
 
 /**
  * Created by Rj on 10/19/2016.
@@ -26,10 +31,21 @@ public class Character {
     }
 
     private Character() {
-        equippedWeapon = null;
+        mEquippedWeapon = null;
 
-        mStatList = new ArrayList<>();
-        mStatList.add(mStr);
+        mName = "Default Name";
+        mHomeland = "Default Homeland";
+        mSil = 0;
+        mExp = 0;
+
+        mAnima = 0;
+
+        mEquippedWeapon = null;
+        mInventoryList = new ArrayList<>();
+        mRefID = 1;
+
+        mPhysicalStats = new StatGroup(CON, STR, DEX);
+        mMentalStats = new StatGroup(PER, CHR, INT);
 
         mAttributeList = new ArrayList<>();
         mAttributeList.add(new Attribute(HP));
@@ -46,21 +62,20 @@ public class Character {
     private String mName;
     private String mHomeland;
     private int mSil;
+    private int mExp;
 
-    private int mStr;
-    private int mCon;
-    private int mDex;
-    private int mPer;
-    private int mChr;
-    private int mInt;
     private int mAnima;
 
-    private Weapon equippedWeapon;
+    private Weapon mEquippedWeapon;
 
-    private ArrayList<Integer> mStatList;
+    private StatGroup mPhysicalStats;
+    private StatGroup mMentalStats;
     private ArrayList<Attribute> mAttributeList;
-    private ArrayList<Gear> mInventoryList;
 
+    private ArrayList<Gear> mInventoryList;
+    private int mRefID;
+
+    //region -REGION: Standard getters and setters-
     public String getName() {
         return mName;
     }
@@ -81,56 +96,16 @@ public class Character {
         return mSil;
     }
 
+    public int getExp() {
+        return mExp;
+    }
+
+    public void setExp(int mExp) {
+        this.mExp = mExp;
+    }
+
     public void setSil(int Sil) {
         this.mSil = mSil;
-    }
-
-    public int getStr() {
-        return mStr;
-    }
-
-    public void setStr(int Str) {
-        this.mStr = mStr;
-    }
-
-    public int getCon() {
-        return mCon;
-    }
-
-    public void setCon(int Con) {
-        this.mCon = mCon;
-    }
-
-    public int getDex() {
-        return mDex;
-    }
-
-    public void setDex(int Dex) {
-        this.mDex = mDex;
-    }
-
-    public int getPer() {
-        return mPer;
-    }
-
-    public void setPer(int Per) {
-        this.mPer = mPer;
-    }
-
-    public int getChr() {
-        return mChr;
-    }
-
-    public void setChr(int Chr) {
-        this.mChr = mChr;
-    }
-
-    public int getInt() {
-        return mInt;
-    }
-
-    public void setInt(int Int) {
-        this.mInt = mInt;
     }
 
     public int getAnima() {
@@ -140,51 +115,90 @@ public class Character {
     public void setAnima(int Anima) {
         this.mAnima = mAnima;
     }
+    //endregion
+
+    public int getStat(StatType stat){
+        int statVal = 0;
+
+        if(stat.getCategory() == "PHYS"){
+            statVal = mPhysicalStats.getStat(stat);
+        } else if(stat.getCategory() == "MENT"){
+            statVal = mMentalStats.getStat(stat);
+        }
+
+        return statVal;
+    }
+
+    public boolean increaseStat(StatType stat, int increaseBy){
+        boolean successful = false;
+
+        if(stat.getCategory() == "PHYS"){
+            successful = mPhysicalStats.increaseStat(stat, increaseBy);
+        } else if (stat.getCategory() == "MENT") {
+            successful = mMentalStats.increaseStat(stat, increaseBy);
+        }
+
+        return successful;
+    }
 
     public Attribute getAttribute(AttributeType attributeType){
-        return mAttributeList.get(attributeType.getVal());
+        return mAttributeList.get(attributeType.value());
     }
 
     public void addGear(Gear gear){
-        mInventoryList.add(gear);
+        Gear newGear = gear;
+        newGear.setRefID(mRefID);
+        mRefID++;
+
+        mInventoryList.add(newGear);
     }
 
-    public void removeGear(Gear gear){
-        mInventoryList.remove(gear);
+    public boolean removeGear(Gear gear){
+        boolean success = false;
+        if(gear.getRefID() != 0) {
+            mInventoryList.remove(gear);
+            success = true;
+
+            if(mInventoryList.size() == 0){
+                mRefID = 1;
+            }
+        }
+        return success;
     }
 
     public void equipWeapon(Weapon weapon){
-        equippedWeapon = weapon;
+        mEquippedWeapon = weapon;
         for(Attribute attribute : mAttributeList){
             attribute.addModifier(weapon);
         }
     }
 
     public void unequipWeapon(Weapon weapon){
-        equippedWeapon = null;
+        mEquippedWeapon = null;
         for(Attribute attribute : mAttributeList){
             attribute.removeModifier(weapon);
         }
     }
 
     /**********Attribute Class**********/
-    private class Attribute {
+    public class Attribute {
         public Attribute(AttributeType attributeType){
             mType = attributeType;
             mBaseValue = 0;
             mTotalValue = 0;
+            mModifiers = new HashMap<>();
         }
 
         public Attribute(AttributeType attributeType, int baseValue){
             mType = attributeType;
             mBaseValue = baseValue;
             mTotalValue = mBaseValue;
+            mModifiers = new HashMap<>();
         }
 
         private AttributeType mType;
         private int mBaseValue;
         private int mTotalValue;
-
         private HashMap<String, Integer> mModifiers;
 
         public int getBaseValue(){
@@ -211,20 +225,20 @@ public class Character {
 
         public int updateBaseValue(){
             switch(mType){
-                case HP:    mBaseValue = mCon + mStr + 10;
+                case HP:    mBaseValue = mPhysicalStats.getStat(CON) + mPhysicalStats.getStat(STR) + 10;
                     break;
-                case REGEN: mBaseValue = mCon / 2;
+                case REGEN: mBaseValue = mPhysicalStats.getStat(CON) / 2;
                     break;
-                case INIT:  mBaseValue = mDex + mPer;
+                case INIT:  mBaseValue = mPhysicalStats.getStat(DEX) + mMentalStats.getStat(PER);
                     break;
-                case SPD:   mBaseValue = (mDex / 2) + 3;
+                case SPD:   mBaseValue = (mPhysicalStats.getStat(DEX) / 2) + 3;
                     break;
 
-                case DEF:   mBaseValue = mDex /*+ Evasion skill*/;
+                case DEF:   mBaseValue = mPhysicalStats.getStat(DEX) /*+ Evasion skill*/;
                     break;
-                case ATK:   mBaseValue = mPer /*+ Weapon skill*/;
+                case ATK:   mBaseValue = mMentalStats.getStat(PER) /*+ Weapon skill*/;
                     break;
-                case MDMG:  mBaseValue = mStr;
+                case MDMG:  mBaseValue = mPhysicalStats.getStat(STR);
                     break;
                 case RDMG:  //No action - RDMG depends only on ranged weapon damage
                 case ARM:   //No action - ARM depends only on gear ARM atttribute
@@ -251,6 +265,63 @@ public class Character {
             }
 
             updateTotalValue();
+        }
+    }
+
+    /**********StatGroup Class**********/
+    public class StatGroup {
+        public StatGroup(StatType statOne, StatType statTwo, StatType statThree){
+            mStatMap = new HashMap<>();
+
+            mStatMap.put(statOne, 0);
+            mStatMap.put(statTwo, 0);
+            mStatMap.put(statThree, 0);
+        }
+
+        private HashMap<StatType, Integer> mStatMap;
+
+        private boolean checkMaxDifference(StatType stat, int newValue){
+            HashMap<StatType, Integer> tmpMap = new HashMap<>();
+            tmpMap.putAll(mStatMap);
+
+            tmpMap.put(stat, newValue);
+
+            int max = 0;
+            int min = 1000;
+            for(Map.Entry<StatType, Integer> entry : tmpMap.entrySet()){
+                int currentVal = entry.getValue();
+                if(max < currentVal){
+                    max = currentVal;
+                }
+                if(min > currentVal){
+                    min = currentVal;
+                }
+            }
+
+            if((max - min) > 4){
+                return false;
+            } else{
+                return true;
+            }
+        }
+
+        public int getStat(StatType stat){
+            return mStatMap.get(stat);
+        }
+
+        public HashMap<StatType, Integer> getAllStats(){
+            return mStatMap;
+        }
+
+        public boolean increaseStat(StatType stat, int increaseBy){
+            int newValue = mStatMap.get(stat) + increaseBy;
+
+            if(checkMaxDifference(stat, newValue)) {
+                mStatMap.put(stat, newValue);
+                return true;
+            } else{
+                return false;
+            }
         }
     }
 }

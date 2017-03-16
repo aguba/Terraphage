@@ -3,6 +3,7 @@ package com.rafaelmallare.terraphage;
 import java.util.HashMap;
 
 import static com.rafaelmallare.terraphage.AttributeType.ATK;
+import static com.rafaelmallare.terraphage.AttributeType.HP;
 import static com.rafaelmallare.terraphage.AttributeType.SPD;
 import static com.rafaelmallare.terraphage.WeaponType.Melee;
 import static com.rafaelmallare.terraphage.WeaponType.Ranged;

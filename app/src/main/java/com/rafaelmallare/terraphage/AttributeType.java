@@ -21,7 +21,7 @@ public enum AttributeType {
         val = value;
     }
 
-    public int getVal(){
+    public int value(){
         return val;
     }
 }

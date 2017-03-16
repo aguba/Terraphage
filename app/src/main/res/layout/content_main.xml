@@ -356,14 +356,14 @@
 
         </android.support.v7.widget.CardView>
 
-        <!--Stat Cards-->
+        <!--StatGroup Cards-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <!--Mental Stat Card-->
+            <!--Mental StatGroup Card-->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -375,7 +375,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!--Stat Names-->
+                    <!--StatGroup Names-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -433,7 +433,7 @@
 
                     </LinearLayout>
 
-                    <!--Stat Values-->
+                    <!--StatGroup Values-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -491,7 +491,7 @@
 
             </android.support.v7.widget.CardView>
 
-            <!--Physical Stat Card-->
+            <!--Physical StatGroup Card-->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -503,7 +503,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!--Stat Values-->
+                    <!--StatGroup Values-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -557,7 +557,7 @@
 
                     </LinearLayout>
 
-                    <!--Stat Names-->
+                    <!--StatGroup Names-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
