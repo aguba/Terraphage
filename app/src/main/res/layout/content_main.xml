@@ -45,21 +45,165 @@
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
-        <!--HP and EXP Cards-->
+        <!--Non-Combat Stats-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!--HP Card-->
+            <!--"Initiative" Card-->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
+                app:cardElevation="2dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <!--HP-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/hp_current_val"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="22sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/"
+                                android:textSize="22sp" />
+
+                            <TextView
+                                android:id="@+id/hp_total_val"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="22sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="4dp"
+                            android:background="@color/colorDarkDivider" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_hp"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="40dp"
+                        android:background="@color/colorLightDivider" />
+
+                    <!--Init-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/init_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="4dp"
+                            android:background="@color/colorDarkDivider" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_init"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="40dp"
+                        android:background="@color/colorLightDivider" />
+
+                    <!--SPD-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/spd_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="4dp"
+                            android:background="@color/colorDarkDivider" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_spd"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--EXP Card-->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:background="?attr/selectableItemBackground"
@@ -74,10 +218,10 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/hp_current_val"
+                            android:id="@+id/exp_current_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="00"
                             android:textSize="22sp" />
 
                         <TextView
@@ -87,10 +231,10 @@
                             android:textSize="22sp" />
 
                         <TextView
-                            android:id="@+id/hp_total_val"
+                            android:id="@+id/exp_total_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="00"
                             android:textSize="22sp" />
 
                     </LinearLayout>
@@ -104,18 +248,27 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/card_hp"
+                        android:text="EXP"
                         android:textSize="12sp" />
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
-            <!--EXP Card-->
+        </LinearLayout>
+
+        <!--Combat Cards-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--ATK Card-->
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
+                app:cardElevation="2dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -124,7 +277,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <!--Current EXP-->
+                    <!--ATK-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -135,10 +288,10 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/exp_current_val"
+                            android:id="@+id/atk_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="000"
+                            android:text="0"
                             android:textSize="22sp" />
 
                         <View
@@ -150,19 +303,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/card_exp_current"
+                            android:text="ATK"
                             android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="1dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="4dp"
+                        android:layout_height="40dp"
                         android:background="@color/colorLightDivider" />
 
-                    <!--Total EXP-->
+                    <!--DMG-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -173,10 +324,10 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/exp_total_val"
+                            android:id="@+id/dmg_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="000"
+                            android:text="0"
                             android:textSize="22sp" />
 
                         <View
@@ -188,8 +339,92 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/card_exp_total"
+                            android:text="@string/card_dmg"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--DEF Card-->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <!--DEF-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/def_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="4dp"
+                            android:background="@color/colorDarkDivider" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_def"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="40dp"
+                        android:background="@color/colorLightDivider" />
+
+                    <!--ARM-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/arm_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="4dp"
+                            android:background="@color/colorDarkDivider" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ARM"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -199,162 +434,6 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-
-        <!--"Initiative" Card-->
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <!--Init-->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/init_val"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="22sp" />
-
-                    <View
-                        android:layout_width="24dp"
-                        android:layout_height="1dp"
-                        android:layout_margin="4dp"
-                        android:background="@color/colorDarkDivider" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/card_init"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="40dp"
-                    android:background="@color/colorLightDivider" />
-
-                <!--SPD-->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/spd_val"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="22sp" />
-
-                    <View
-                        android:layout_width="24dp"
-                        android:layout_height="1dp"
-                        android:layout_margin="4dp"
-                        android:background="@color/colorDarkDivider" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/card_spd"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="40dp"
-                    android:background="@color/colorLightDivider" />
-
-                <!--DMG-->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/dmg_val"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="22sp" />
-
-                    <View
-                        android:layout_width="24dp"
-                        android:layout_height="1dp"
-                        android:layout_margin="4dp"
-                        android:background="@color/colorDarkDivider" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/card_dmg"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="40dp"
-                    android:background="@color/colorLightDivider" />
-
-                <!--DEF-->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/def_val"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="22sp" />
-
-                    <View
-                        android:layout_width="24dp"
-                        android:layout_height="1dp"
-                        android:layout_margin="4dp"
-                        android:background="@color/colorDarkDivider" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/card_def"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
 
         <!--StatGroup Cards-->
         <LinearLayout
