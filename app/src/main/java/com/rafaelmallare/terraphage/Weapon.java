@@ -13,8 +13,6 @@ public class Weapon extends Gear {
         mType = weaponType;
         mRank = E;
 
-        mMeleeDamage = 0;
-        mRangedDamage = 0;
         mRange = 0;
         mMaxAmmo = 0;
         mCurrentAmmo = mMaxAmmo;
@@ -37,32 +35,41 @@ public class Weapon extends Gear {
     private WeaponType mType;
     private Rank mRank;
 
-    private int mMeleeDamage;
-    private int mRangedDamage;
     private int mMaxAmmo;
     private int mCurrentAmmo;
     private int mRange;
     private int mAOE;
 
-    public void setWeaponStats(int meleeDamage){
-        mMeleeDamage = meleeDamage;
-    }
-
-    public void setWeaponStats(int rangedDamage, int range, int maxAmmo){
-        mRangedDamage = rangedDamage;
-        mRange = range;
-        mMaxAmmo = maxAmmo;
+    public void setWeaponStats(int ammoMax){
+        mMaxAmmo = ammoMax;
         mCurrentAmmo = mMaxAmmo;
     }
 
-    public void setWeaponStats(int rangedDamage, int range, int maxAmmo, int AOE){
-        setWeaponStats(rangedDamage, range, maxAmmo);
+    public void setWeaponStats(int ammoMax, Rank rank){
+        setWeaponStats(ammoMax);
+        mRank = rank;
+    }
+
+    public void setWeaponStats(int ammoMax, int range){
+        mMaxAmmo = ammoMax;
+        mCurrentAmmo = mMaxAmmo;
+
+        mRange = range;
+    }
+
+    public void setWeaponStats(int ammoMax, int range, Rank rank){
+        setWeaponStats(ammoMax, range);
+        mRank = rank;
+    }
+
+    public void setWeaponStats(int ammoMax, int range, int AOE){
+        setWeaponStats(ammoMax, range);
         mAOE = AOE;
     }
 
-    public void setWeaponStats(int meleeDamage, int rangedDamage, int maxAmmo, int range, int AOE){
-        setWeaponStats(rangedDamage, range, maxAmmo, AOE);
-        mMeleeDamage = meleeDamage;
+    public void setWeaponStats(int ammoMax, int range, int AOE, Rank rank){
+        setWeaponStats(ammoMax, range, AOE);
+        mRank = rank;
     }
 
     //region -REGION: Getters and setters for Type, Rank, Damage, Ammo, Range, and AOE-
@@ -82,35 +89,19 @@ public class Weapon extends Gear {
         mRank = rank;
     }
 
-    public int getMeleeDamage(){
-        return mMeleeDamage;
-    }
-
-    public void setMeleeDamage(int damage){
-        mMeleeDamage = damage;
-    }
-
-    public int getRangedDamage(){
-        return mRangedDamage;
-    }
-
-    public void setRangedDamage(int damage){
-        mRangedDamage = damage;
-    }
-
-    public int getMaxAmmo(){
+    public int getAmmoMax(){
         return mMaxAmmo;
     }
 
-    public void setMaxAmmo(int maxAmmo){
+    public void setAmmoMax(int maxAmmo){
         mMaxAmmo = maxAmmo;
     }
 
-    public int getCurrentAmmo(){
+    public int getAmmoCurrent(){
         return mCurrentAmmo;
     }
 
-    public boolean setCurrentAmmo(int currentAmmo){
+    public boolean setAmmoCurrent(int currentAmmo){
         boolean success = false;
         if (currentAmmo <= mMaxAmmo){
             success = true;

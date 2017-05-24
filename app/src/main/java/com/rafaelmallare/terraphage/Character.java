@@ -31,7 +31,7 @@ public class Character {
     }
 
     private Character() {
-        mEquippedWeapon = null;
+        mUnarmed = new Weapon("Unarmed", 0, WeaponType.Melee);
 
         mName = "Default Name";
         mHomeland = "Default Homeland";
@@ -42,6 +42,8 @@ public class Character {
 
         mEquippedWeapon = null;
         mInventoryList = new ArrayList<>();
+        mInventoryList.add(mUnarmed);
+
         mRefID = 1;
 
         mPhysicalStats = new StatGroup(CON, STR, DEX);
@@ -57,6 +59,9 @@ public class Character {
         mAttributeList.add(new Attribute(MDMG));
         mAttributeList.add(new Attribute(RDMG));
         mAttributeList.add(new Attribute(ARM));
+
+        equipWeapon(mUnarmed);
+
     }
 
     private String mName;
@@ -67,6 +72,7 @@ public class Character {
     private int mAnima;
 
     private Weapon mEquippedWeapon;
+    private Weapon mUnarmed;
 
     private StatGroup mPhysicalStats;
     private StatGroup mMentalStats;
@@ -114,6 +120,27 @@ public class Character {
 
     public void setAnima(int Anima) {
         this.mAnima = mAnima;
+    }
+
+    public Weapon getEquippedWeapon(){
+        return mEquippedWeapon;
+    }
+
+    public ArrayList<Gear> getInventory(){
+        return mInventoryList;
+    }
+
+    public ArrayList<Weapon> getWeapons(){
+        ArrayList<Weapon> weaponList = new ArrayList<>();
+        for (int i = 0; i < mInventoryList.size(); i++){
+            Gear gear = mInventoryList.get(i);
+            if (gear instanceof Weapon){
+                Weapon weapon = (Weapon) gear;
+                weaponList.add(weapon);
+            }
+        }
+
+        return weaponList;
     }
     //endregion
 
@@ -168,13 +195,15 @@ public class Character {
 
     public void equipWeapon(Weapon weapon){
         mEquippedWeapon = weapon;
+        weapon.equip();
         for(Attribute attribute : mAttributeList){
             attribute.addModifier(weapon);
         }
     }
 
     public void unequipWeapon(Weapon weapon){
-        mEquippedWeapon = null;
+        mEquippedWeapon = mUnarmed;
+        weapon.unEquip();
         for(Attribute attribute : mAttributeList){
             attribute.removeModifier(weapon);
         }

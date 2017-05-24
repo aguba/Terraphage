@@ -22,11 +22,9 @@ public class GearStore {
         mGearInventory = new HashMap<>();
 
         Weapon Revolver = new Weapon("Revolver", 200, Ranged, ATK, -1);
-        Revolver.setWeaponStats(10, 10, 6);
+        Revolver.setWeaponStats(6, 10);
         Weapon GreatSword = new Weapon("Great Sword", 15, Melee, ATK, -3);
-        GreatSword.setWeaponStats(4);
         Weapon Flail = new Weapon("Flail", 10, Melee, ATK, -1);
-        Flail.setWeaponStats(4);
 
         addWeapon(Revolver);
         addWeapon(GreatSword);

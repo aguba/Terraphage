@@ -4,10 +4,16 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="clear">#00FFFFFF</color>
+
     <color name="colorMentalStatBackground">#00838F</color>
     <color name="colorMentalStatDivider">#006064</color>
     <color name="colorPhysicalStatBackground">#D32F2F</color>
     <color name="colorPhysicalStatDivider">#B71C1C</color>
     <color name="colorDarkDivider">#808080</color>
     <color name="colorLightDivider">#E6E6E6</color>
+
+    <color name="colorExpandableBackgroundDark">#424242</color>
+    <color name="colorExpandableTintLight">#F5F5F5</color>
+    <color name="colorExpandableTintDark">#424242</color>
 </resources>

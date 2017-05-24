@@ -1,11 +1,15 @@
 package com.rafaelmallare.terraphage;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +19,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -24,10 +32,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.id;
+import static com.rafaelmallare.terraphage.AttributeType.ATK;
 import static com.rafaelmallare.terraphage.AttributeType.DEF;
 import static com.rafaelmallare.terraphage.AttributeType.HP;
 import static com.rafaelmallare.terraphage.AttributeType.INIT;
 import static com.rafaelmallare.terraphage.AttributeType.MDMG;
+import static com.rafaelmallare.terraphage.AttributeType.RDMG;
 import static com.rafaelmallare.terraphage.AttributeType.SPD;
 import static com.rafaelmallare.terraphage.StatType.CHR;
 import static com.rafaelmallare.terraphage.StatType.CON;
@@ -35,6 +46,9 @@ import static com.rafaelmallare.terraphage.StatType.DEX;
 import static com.rafaelmallare.terraphage.StatType.INT;
 import static com.rafaelmallare.terraphage.StatType.PER;
 import static com.rafaelmallare.terraphage.StatType.STR;
+import static com.rafaelmallare.terraphage.Weapon.Rank.D;
+import static com.rafaelmallare.terraphage.WeaponType.Melee;
+import static com.rafaelmallare.terraphage.WeaponType.Ranged;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +56,11 @@ public class MainActivity extends AppCompatActivity
 
     static final int REQUEST_CODE_PICKER = 100;
 
+    float scale;
+
     //region -REGION: View Bindings-
+    @BindView(R.id.content_main) RelativeLayout rootView;
+
     @BindView(R.id.character_name) TextView characterName_view;
     @BindView(R.id.character_path) TextView characterPath_view;
 
@@ -63,6 +81,15 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.str_val) TextView strVal_view;
     @BindView(R.id.dex_val) TextView dexVal_view;
     @BindView(R.id.header_image) ImageView headerImage_view;
+
+    @BindView(R.id.atk_card) CardView atkCardView;
+    @BindView(R.id.atk_expandable) LinearLayout atkExpandable_view;
+    @BindView(R.id.btn_atk_expand) ImageButton btnAtkExpand;
+    @BindView(R.id.list_weapons) ListView weaponListView;
+
+    @BindView(R.id.def_card) CardView defCardView;
+    @BindView(R.id.def_expandable) LinearLayout defExpandable_view;
+    @BindView(R.id.btn_def_expand) ImageButton btnDefExpand;
     //endregion
 
     final Character character = Character.getInstance();
@@ -76,6 +103,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+
+        scale = getResources().getDisplayMetrics().density;
+
+        /***Animation stuff**/
+        //LayoutTransition layoutTransition = rootView.getLayoutTransition();
+        //layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
 
         ImageLoaderConfiguration imageLoaderConfig = new ImageLoaderConfiguration.Builder(this)
                 .build();
@@ -100,6 +133,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //endregion
+
+        character.addGear(new Weapon("Revolver", 200, Ranged, ATK, -1, RDMG, 10));
+        character.addGear(new Weapon("Great Sword", 15, Melee, ATK, -3, MDMG, 4));
+        character.addGear(new Weapon("Flail", 10, Melee, ATK, -3, MDMG, 4));
 
         updateViewValues();
     }
@@ -145,6 +182,62 @@ public class MainActivity extends AppCompatActivity
         updateViewValues();
     }
     /************************/
+
+    @OnClick({R.id.btn_atk_expand, R.id.btn_def_expand})
+    public void expand(ImageButton imgBtn){
+        int currentVisibility;
+        int newVisibility;
+        int pad;
+        int id = imgBtn.getId();
+
+        CardView cardView = null;
+        LinearLayout expandView = null;
+        int backgroundColor;
+        int tintColor;
+        int expandArrow;
+
+        WeaponListAdapter weaponListAdapter = new WeaponListAdapter(this, character.getWeapons());
+        weaponListView.setAdapter(weaponListAdapter);
+
+        if(id == btnAtkExpand.getId()){
+            cardView = atkCardView;
+            expandView = atkExpandable_view;
+        } else if(id == btnDefExpand.getId()){
+            cardView = defCardView;
+            expandView = defExpandable_view;
+        }
+
+        currentVisibility = expandView.getVisibility();
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)cardView.getLayoutParams();
+
+        if (currentVisibility == View.GONE){
+            params.weight = 1000;
+            newVisibility = View.VISIBLE;
+            pad = toDP(35);
+            backgroundColor = R.color.clear;
+            tintColor = R.color.colorExpandableTintDark;
+            expandArrow = R.drawable.expand_up;
+        } else{
+            params.weight = 1;
+            newVisibility = View.GONE;
+            pad = toDP(15);
+            backgroundColor = R.color.colorExpandableBackgroundDark;
+            tintColor = R.color.colorExpandableTintLight;
+            expandArrow = R.drawable.expand_down;
+        }
+
+        imgBtn.setPadding(pad, pad, pad, pad);
+        imgBtn.setBackgroundColor(getResources().getColor(backgroundColor));
+        imgBtn.setColorFilter(getResources().getColor(tintColor));
+        imgBtn.setImageDrawable(getResources().getDrawable(expandArrow));
+        cardView.setLayoutParams(params);
+        expandView.setVisibility(newVisibility);
+    }
+
+    public int toDP(int num){
+        return (int) (num * scale + 0.5f);
+    }
 
     @Override
     public void onBackPressed() {

@@ -5,7 +5,17 @@ package com.rafaelmallare.terraphage;
  */
 
 public enum WeaponType {
-    Melee,
-    Ranged,
-    Thrown;
+    Melee("Melee"),
+    Ranged("Ranged"),
+    Thrown("Thrown");
+
+    private String mName;
+
+    private WeaponType(String name){
+        mName = name;
+    }
+
+    public String toString(){
+        return mName;
+    }
 }
