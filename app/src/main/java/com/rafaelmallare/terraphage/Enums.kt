@@ -4,18 +4,18 @@ package com.rafaelmallare.terraphage
  * Created by Rj on 5/23/2017.
  */
 
-enum class AttributeTypeK {
+enum class AttributeType {
     HP, REGEN, INIT, SPD, DEF, ATK, MDMG, RDMG, ARM
 }
 
-enum class WeaponTypeK {
+enum class WeaponType {
     Melee, Ranged, Thrown
 }
 
-enum class WeaponRankK {
+enum class WeaponRank {
     A, B, C, D, E
 }
 
-enum class StatTypeK {
+enum class StatType {
     CON, STR, DEX, PER, CHR, INT
 }

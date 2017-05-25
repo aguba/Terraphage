@@ -4,23 +4,23 @@ package com.rafaelmallare.terraphage
  * Created by Rj on 5/24/2017.
  */
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
-import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.rafaelmallare.terraphage.AttributeType.*
+import com.rafaelmallare.terraphage.StatType.*
+import com.rafaelmallare.terraphage.WeaponRank.*
+import com.rafaelmallare.terraphage.WeaponType.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val character = CharacterK()
+    val character = Character()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //-------------------------------------Test Functions----------------------------------------------
         dex_val.setOnClickListener {
-            character.increaseStatBy(StatTypeK.DEX, 1)
+            character.increaseStatBy(StatType.DEX, 1)
             updateViewValues()
         }
         //-------------------------------------------------------------------------------------------------
@@ -52,24 +52,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun updateViewValues() {
         character_name.text = character.name
 
-        hp_total_val.text = character.getAttribute(AttributeTypeK.HP).toString()
+        hp_total_val.text = character.getAttribute(HP).toString()
         hp_current_val.text = character.currentHealth.toString()
 
-        init_val.text = character.getAttribute(AttributeTypeK.INIT).toString()
-        spd_val.text = character.getAttribute(AttributeTypeK.SPD).toString()
-        def_val.text = character.getAttribute(AttributeTypeK.DEF).toString()
-        dmg_val.text = if (character.equippedWeapon.type == WeaponTypeK.Melee) character.getAttribute(AttributeTypeK.MDMG).toString()
-                       else character.getAttribute(AttributeTypeK.RDMG).toString()
+        init_val.text = character.getAttribute(INIT).toString()
+        spd_val.text = character.getAttribute(SPD).toString()
+        def_val.text = character.getAttribute(DEF).toString()
+        dmg_val.text = if (character.equippedWeapon.type == Melee) character.getAttribute(MDMG).toString()
+                       else character.getAttribute(RDMG).toString()
 
         exp_total_val.text = character.expTotal.toString()
         exp_current_val.text = character.expCurrent.toString()
 
-        per_val.text = character.getStat(StatTypeK.PER).toString()
-        chr_val.text = character.getStat(StatTypeK.CHR).toString()
-        int_val.text = character.getStat(StatTypeK.INT).toString()
-        con_val.text = character.getStat(StatTypeK.CON).toString()
-        str_val.text = character.getStat(StatTypeK.STR).toString()
-        dex_val.text = character.getStat(StatTypeK.DEX).toString()
+        per_val.text = character.getStat(PER).toString()
+        chr_val.text = character.getStat(CHR).toString()
+        int_val.text = character.getStat(INT).toString()
+        con_val.text = character.getStat(CON).toString()
+        str_val.text = character.getStat(STR).toString()
+        dex_val.text = character.getStat(DEX).toString()
     }
 
     override fun onBackPressed() {
