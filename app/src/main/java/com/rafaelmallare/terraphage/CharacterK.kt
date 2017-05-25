@@ -3,26 +3,42 @@ package com.rafaelmallare.terraphage
 /**
  * Created by Rj on 5/23/2017.
  */
-object CharacterK {
+class CharacterK {
     var name = "Default Name"
     var homeland = "Default Homeland"
     var sil = 0
-    var exp = 0
+
+    var expTotal = 0
+        set(value) {
+            if (value > field) {
+                expCurrent += value - field
+                field = value
+            }
+        }
+
+    var expCurrent = expTotal
 
     var anima = 0
 
     object physStats : StatGroup(StatTypeK.CON, StatTypeK.STR, StatTypeK.DEX)
     object mentStats : StatGroup(StatTypeK.PER, StatTypeK.CHR, StatTypeK.INT)
 
-    var attributes = mutableListOf(Attribute(AttributeTypeK.HP), Attribute(AttributeTypeK.REGEN),
+    val attributes = listOf(Attribute(AttributeTypeK.HP), Attribute(AttributeTypeK.REGEN),
                                             Attribute(AttributeTypeK.INIT), Attribute(AttributeTypeK.SPD),
                                             Attribute(AttributeTypeK.DEF), Attribute(AttributeTypeK.ATK),
                                             Attribute(AttributeTypeK.MDMG), Attribute(AttributeTypeK.RDMG),
                                             Attribute(AttributeTypeK.ARM))
 
+    var currentHealth = getAttribute(AttributeTypeK.HP)
+        set(value) {
+            if (value > getAttribute(AttributeTypeK.HP)) field = getAttribute(AttributeTypeK.HP)
+            else if (value < 0) field = 0
+            else field = value
+        }
+
     val unarmed = WeaponK("Unarmed", 0, WeaponTypeK.Melee)
     var equippedWeapon = unarmed
-    var inventory = listOf<GearK>()
+    val inventory = listOf<GearK>()
 
     fun getStat(stat: StatTypeK) : Int {
         if (physStats.contains(stat)) return physStats.get(stat) else return mentStats.get(stat)
@@ -32,20 +48,33 @@ object CharacterK {
         if (physStats.contains(stat)) physStats.increaseStatBy(stat, value) else mentStats.increaseStatBy(stat, value)
     }
 
-    class Attribute(val type: AttributeTypeK) {
-        var modifiers = mutableMapOf<String, Int>()
+    fun getAttribute(attribute: AttributeTypeK) : Int {
+        return attributes[attribute.ordinal].totalValue
+    }
+
+    fun equipWeapon(weapon: WeaponK) {
+        if (weapon in inventory) equippedWeapon = weapon
+    }
+
+    fun unequipWeapon(weapon: WeaponK) {
+        if (weapon == equippedWeapon) equippedWeapon = unarmed
+    }
+
+    inner class Attribute(val type: AttributeTypeK) {
+        val modifiers = mutableMapOf<String, Int>()
 
         val baseValue: Int
             get() {
                 val value: Int
                 when (type) {
-                    AttributeTypeK.HP -> value = physStats.get(StatTypeK.CON) + physStats.get(StatTypeK.STR) + 10
-                    AttributeTypeK.REGEN -> value = physStats.get(StatTypeK.CON) / 2
-                    AttributeTypeK.INIT -> value = physStats.get(StatTypeK.DEX) + mentStats.get(StatTypeK.PER)
-                    AttributeTypeK.SPD -> value = (physStats.get(StatTypeK.DEX) / 2) + 3
-                    AttributeTypeK.DEF -> value = mentStats.get(StatTypeK.DEX) /* + Evasion skill */
-                    AttributeTypeK.ATK -> value = mentStats.get(StatTypeK.PER) /* + Weapon skill */
-                    AttributeTypeK.RDMG -> value = 0 /* return ranged weapon damage */
+                    AttributeTypeK.HP -> value = getStat(StatTypeK.CON) + physStats.get(StatTypeK.STR) + 10
+                    AttributeTypeK.REGEN -> value = getStat(StatTypeK.CON) / 2
+                    AttributeTypeK.INIT -> value = getStat(StatTypeK.DEX) + mentStats.get(StatTypeK.PER)
+                    AttributeTypeK.SPD -> value = (getStat(StatTypeK.DEX) / 2) + 3
+                    AttributeTypeK.DEF -> value = getStat(StatTypeK.DEX) /* + Evasion skill */
+                    AttributeTypeK.ATK -> value = getStat(StatTypeK.PER) /* + Weapon skill */
+                    AttributeTypeK.MDMG -> value = getStat(StatTypeK.STR)
+                    AttributeTypeK.RDMG -> value = if (equippedWeapon.type == WeaponTypeK.Ranged) equippedWeapon.modifiers[AttributeTypeK.RDMG] ?: -1 else 0
                     AttributeTypeK.ARM -> value = 0 /* return ARM of gear */
                     else -> value = 0
                 }
@@ -73,10 +102,10 @@ object CharacterK {
     }
 
     open class StatGroup(statOne: StatTypeK, statTwo: StatTypeK, statThree: StatTypeK) {
-        var statMap = mutableMapOf(Pair(statOne, 0), Pair(statTwo, 0), Pair(statThree, 0))
+        val statMap = mutableMapOf(Pair(statOne, 0), Pair(statTwo, 0), Pair(statThree, 0))
 
         private fun withinConstraint(stat: StatTypeK, value: Int): Boolean{
-            var tmpMap = statMap.toMutableMap()
+            val tmpMap = statMap.toMutableMap()
             tmpMap.put(stat, (tmpMap[stat] ?: 0) + value)
 
             return ((tmpMap.values.max() ?: 0) - (tmpMap.values.min() ?: 0)) <= 4

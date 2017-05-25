@@ -50,7 +50,7 @@ import static com.rafaelmallare.terraphage.Weapon.Rank.D;
 import static com.rafaelmallare.terraphage.WeaponType.Melee;
 import static com.rafaelmallare.terraphage.WeaponType.Ranged;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivityOld extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
 
