@@ -2,13 +2,14 @@ package com.rafaelmallare.terraphage
 
 import com.rafaelmallare.terraphage.AttributeType.*
 import com.rafaelmallare.terraphage.StatType.*
-import com.rafaelmallare.terraphage.WeaponRank.*
 import com.rafaelmallare.terraphage.WeaponType.*
+import com.rafaelmallare.terraphage.GearType.*
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Created by Rj on 5/23/2017.
  */
-class Character {
+object Character {
     var name = "Default Name"
     var homeland = "Default Homeland"
     var sil = 0
@@ -28,57 +29,94 @@ class Character {
     object physStats : StatGroup(CON, STR, DEX)
     object mentStats : StatGroup(PER, CHR, INT)
 
+    val skills = Skills
+
     val attributes = listOf(Attribute(HP), Attribute(REGEN), Attribute(INIT), Attribute(SPD),
                             Attribute(DEF), Attribute(ATK), Attribute(MDMG), Attribute(RDMG),
                             Attribute(ARM))
 
-    var currentHealth = getAttribute(HP)
+    private var maxHealth = getAttribute(HP)
+    var currentHealth = maxHealth
         set(value) {
-            if (value > getAttribute(HP)) field = getAttribute(HP)
+            if (value > maxHealth) field = maxHealth
             else if (value < 0) field = 0
             else field = value
         }
 
-    val unarmed = Weapon("Unarmed", 0, Melee)
+    val unarmed = Gear("Unarmed", Weapon, Melee, 0)
+    val unarmored = Gear("Unarmored", Armor, null, 0)
     var equippedWeapon = unarmed
-    val inventory = listOf<Gear>()
+    var equippedArmor = unarmored
+    val inventory = mutableListOf<Gear>()
+    val weaponInv: List<Gear>
+        get() = inventory.filter { gear -> gear.type == Weapon }
+    val armorInv: List<Gear>
+        get() = inventory.filter { gear -> gear.type == Armor }
+    val gadgetInv: List<Gear>
+        get() = inventory.filter { gear -> gear.type == Gadget }
 
-    fun getStat(stat: StatType) : Int {
-        if (physStats.contains(stat)) return physStats.get(stat) else return mentStats.get(stat)
-    }
+    fun getStat(stat: StatType) : Int = if (stat == ANI) anima else if (physStats.contains(stat)) physStats.get(stat) else mentStats.get(stat)
 
     fun increaseStatBy(stat: StatType, value: Int) {
-        if (physStats.contains(stat)) physStats.increaseStatBy(stat, value) else mentStats.increaseStatBy(stat, value)
+        if (physStats.contains(stat)) physStats.increaseStatBy(stat, value)
+        else if (mentStats.contains(stat)) mentStats.increaseStatBy(stat, value)
+        else anima += value
     }
 
-    fun getAttribute(attribute: AttributeType) : Int {
-        return attributes[attribute.ordinal].totalValue
+    fun getAttribute(attribute: AttributeType) = attributes[attribute.ordinal].totalValue
+
+    fun equipWeapon(weapon: Gear) {
+        if (equippedWeapon != unarmed) unequipWeapon(equippedWeapon)
+        if (weapon in weaponInv) equippedWeapon = weapon
+        for (attribute in attributes) attribute.addModifier(weapon)
     }
 
-    fun equipWeapon(weapon: Weapon) {
-        if (weapon in inventory) equippedWeapon = weapon
-    }
-
-    fun unequipWeapon(weapon: Weapon) {
+    fun unequipWeapon(weapon: Gear) {
         if (weapon == equippedWeapon) equippedWeapon = unarmed
+        for (attribute in attributes) attribute.removeModifier(weapon)
     }
 
-    inner class Attribute(val type: AttributeType) {
+    fun equipArmor(armor: Gear) {
+        if (equippedArmor != unarmored) unequipArmor(equippedArmor)
+        if (armor in armorInv) equippedArmor = armor
+        for (attribute in attributes) attribute.addModifier(armor)
+    }
+
+    fun unequipArmor(armor: Gear) {
+        if (armor == equippedArmor) equippedArmor = unarmored
+        for (attribute in attributes) attribute.removeModifier(armor)
+    }
+
+    fun increaseSkill(skill: String) : Boolean {
+        if ((expCurrent - 5) >= 0) {
+            skills[skill] = skills[skill] + 1
+            expCurrent -= 5
+            return true
+        } else {
+            return false
+        }
+    }
+
+    class Attribute(val type: AttributeType) {
         val modifiers = mutableMapOf<String, Int>()
 
         val baseValue: Int
             get() {
                 val value: Int
                 when (type) {
-                    AttributeType.HP -> value = getStat(CON) + physStats.get(STR) + 10
-                    AttributeType.REGEN -> value = getStat(CON) / 2
-                    AttributeType.INIT -> value = getStat(DEX) + mentStats.get(PER)
-                    AttributeType.SPD -> value = (getStat(DEX) / 2) + 3
-                    AttributeType.DEF -> value = getStat(DEX) /* + Evasion skill */
-                    AttributeType.ATK -> value = getStat(PER) /* + Weapon skill */
-                    AttributeType.MDMG -> value = getStat(STR)
-                    AttributeType.RDMG -> value = if (equippedWeapon.type == Ranged) equippedWeapon.modifiers[RDMG] ?: -1 else 0
-                    AttributeType.ARM -> value = 0 /* return ARM of gear */
+                    AttributeType.HP -> {
+                        value = getStat(CON) + physStats.get(STR) + 10
+                        maxHealth = value
+                        currentHealth = maxHealth
+                    }
+                    REGEN -> value = getStat(CON) / 2
+                    INIT -> value = getStat(DEX) + mentStats.get(PER)
+                    SPD -> value = (getStat(DEX) / 2) + 3
+                    DEF -> value = getStat(DEX) + skills["Evasion", true].toInt()
+                    ATK -> value = getStat(PER) + skills["Weapon Mastery", true].toInt()
+                    MDMG -> value = getStat(STR)
+                    RDMG -> value = if (equippedWeapon.subType == Ranged) (equippedWeapon.modifiers[RDMG] ?: 0) else 0
+                    ARM -> value = (equippedArmor.modifiers[ARM] ?: 0) + (equippedWeapon.modifiers[ARM] ?: 0)
                     else -> value = 0
                 }
 
@@ -88,8 +126,11 @@ class Character {
         val totalValue: Int
             get() {
                 var value = baseValue
-                for (item in modifiers.values){
-                    value += item
+
+                if (type != RDMG && type != ARM) {
+                    for (item in modifiers.values) {
+                        value += item
+                    }
                 }
 
                 return value

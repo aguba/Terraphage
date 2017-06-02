@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/list_item_weapon"
+    android:id="@+id/item_gear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:orientation="horizontal">
 
-    <RadioButton
+    <CheckBox
+        android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:focusable="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,19 +24,19 @@
             android:layout_marginTop="8dp">
 
             <TextView
-                android:id="@+id/weapon_name"
+                android:id="@+id/gear_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weapon Name"
+                android:text="Gear Name"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/weapon_type"
+                android:id="@+id/gear_subtype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/weapon_name"
+                android:layout_below="@+id/gear_name"
                 android:layout_marginTop="-4dp"
-                android:text="Type" />
+                android:text="Subtype" />
 
             <TextView
                 android:id="@+id/sil_value"
@@ -51,15 +54,6 @@
                 android:gravity="right"
                 android:text=" Sil" />
 
-            <TextView
-                android:id="@+id/is_equipped"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/sil_text"
-                android:text="Equipped"
-                android:visibility="gone" />
-
         </RelativeLayout>
 
         <TableLayout
@@ -68,6 +62,27 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="4dp"
             android:stretchColumns="*">
+
+            <TableRow android:layout_marginBottom="4dp">
+
+                <LinearLayout
+                    android:id="@+id/cell_arm"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ARM: " />
+
+                    <TextView
+                        android:id="@+id/value_arm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-1" />
+
+                </LinearLayout>
+
+            </TableRow>
 
             <TableRow android:layout_marginBottom="4dp">
 
@@ -84,7 +99,7 @@
                         android:id="@+id/value_atk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="-1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -100,7 +115,7 @@
                         android:id="@+id/value_rdmg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="-1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -116,7 +131,7 @@
                         android:id="@+id/value_mdmg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="-1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -132,7 +147,7 @@
                         android:id="@+id/value_aoe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="-1" />
                 </LinearLayout>
 
             </TableRow>
@@ -152,7 +167,7 @@
                         android:id="@+id/value_ammo_current"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="-1" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -163,7 +178,7 @@
                         android:id="@+id/value_ammo_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="-1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -179,7 +194,7 @@
                         android:id="@+id/value_range"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="-1" />
                 </LinearLayout>
             </TableRow>
 

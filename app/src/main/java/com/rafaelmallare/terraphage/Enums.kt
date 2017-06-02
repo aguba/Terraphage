@@ -17,5 +17,9 @@ enum class WeaponRank {
 }
 
 enum class StatType {
-    CON, STR, DEX, PER, CHR, INT
+    CON, STR, DEX, PER, CHR, INT, ANI
+}
+
+enum class GearType {
+    Weapon, Armor, Gadget
 }
